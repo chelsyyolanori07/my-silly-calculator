@@ -1,5 +1,16 @@
 function appendValue(value) {
-  document.getElementById("result").value += value;
+  let resultField = document.getElementById("result");
+  resultField.value += value;
+  formatNumber();
+}
+
+function formatNumber() {
+  let resultField = document.getElementById("result");
+  let value = resultField.value.replace(/,/g, "");
+
+  if (!isNaN(value) && value !== "") {
+    resultField.value = Number(value).toLocaleString("en");
+  }
 }
 
 function clearDisplay() {
@@ -7,15 +18,17 @@ function clearDisplay() {
 }
 
 function deleteLast() {
-  let currentValue = document.getElementById("result").value;
-  document.getElementById("result").value = currentValue.slice(0, -1);
+  let resultField = document.getElementById("result");
+  resultField.value = resultField.value.slice(0, -1);
+  formatNumber();
 }
 
 function calculateResult() {
   try {
-    let expression = document.getElementById("result").value;
+    let resultField = document.getElementById("result");
+    let expression = resultField.value.replace(/,/g, "");
     let result = eval(expression);
-    document.getElementById("result").value = result;
+    resultField.value = result.toLocaleString("en");
   } catch (error) {
     document.getElementById("result").value = "Error";
   }
